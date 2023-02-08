@@ -15,10 +15,14 @@ namespace Command
         public TeleportObject(GameObject mainObject)
         {
             _object = mainObject;
+            Position = Vector3.zero;
         }
+
+        public Vector3 Position { get; set; }
 
         public void Invoke(Vector3 position)
         {
+            Position = position;
             _object.transform.position = position;
         }
     }

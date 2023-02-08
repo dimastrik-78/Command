@@ -17,12 +17,13 @@ namespace Command
             _mainObject = spawnObject;
         }
 
+        public Vector3 Position { get; set; }
+
         public void Invoke(Vector3 position)
         {
             if (!_mainObject.activeSelf)
             {
                 _mainObject.SetActive(true);
-                _mainObject.transform.position = position;
             }
         }
     }
