@@ -1,29 +1,32 @@
-﻿using Command.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Command.Interface;
 using UnityEngine;
 
 namespace Command
 {
     public class TeleportObject : ICommand
     {
-        private GameObject _object;
+        private readonly GameObject _object;
 
         public TeleportObject(GameObject mainObject)
         {
+            Position = new List<Vector3>();
             _object = mainObject;
-            Position = Vector3.zero;
+            Position.Add(Vector3.zero);
         }
 
-        public Vector3 Position { get; set; }
+        public List<Vector3> Position { get; set; }
 
         public void Invoke(Vector3 position)
         {
-            Position = position;
+            Position.Add(_object.transform.position);
             _object.transform.position = position;
+        }
+
+        public void Undo()
+        {
+            _object.transform.position = Position[^1];
+            Position.RemoveAt(Position.Count - 1);
         }
     }
 }

@@ -12,19 +12,28 @@ namespace Command
         private SpawnObject _spawnObject;
         private TeleportObject _teleportObject;
         private GameObject _object;
-        private List<ICommand> commands;
+        private List<ICommand> _commands;
 
         void Update()
         {
+            CheckInput();
+        }
+
+        private void CheckInput()
+        {
             if (Input.GetMouseButtonDown(0))
             {
-                commands.Add(_spawnObject);
+                _commands.Add(_spawnObject);
                 _spawnObject.Invoke((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+                CheckCommandList();
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                commands.Add(_teleportObject);
+                _commands.Add(_teleportObject);
                 _teleportObject.Invoke((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+                CheckCommandList();
             }
             else if (Input.GetMouseButtonDown(2))
             {
@@ -32,14 +41,23 @@ namespace Command
             }
         }
 
+        private void CheckCommandList()
+        {
+            if (_commands.Count > amountStorage)
+            {
+                _commands.RemoveAt(0);
+            }
+        }
+
         private void Undo()
         {
-            //Debug.Log(commands.);
-            //_teleportObject.Invoke((Vector2)commands.l.Position);
+            _commands[^1].Undo();
+            _commands.RemoveAt(_commands.Count - 1);
         }
 
         public void Get(GameObject mainObject)
         {
+            _commands = new List<ICommand>();
             _spawnObject = new SpawnObject(mainObject);
             _teleportObject = new TeleportObject(mainObject);
         }

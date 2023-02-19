@@ -14,10 +14,11 @@ namespace Command
 
         public SpawnObject(GameObject spawnObject)
         {
+            Position = new List<Vector3>();
             _mainObject = spawnObject;
         }
 
-        public Vector3 Position { get; set; }
+        public List<Vector3> Position { get; set; }
 
         public void Invoke(Vector3 position)
         {
@@ -25,6 +26,11 @@ namespace Command
             {
                 _mainObject.SetActive(true);
             }
+        }
+
+        public void Undo()
+        {
+            _mainObject.SetActive(false);
         }
     }
 }
