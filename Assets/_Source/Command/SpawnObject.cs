@@ -1,9 +1,5 @@
 ﻿using Command.Interface;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Command
@@ -14,11 +10,11 @@ namespace Command
 
         public SpawnObject(GameObject spawnObject)
         {
-            Position = new List<Vector3>();
+            Position = new List<Vector2>();
             _mainObject = spawnObject;
         }
 
-        public List<Vector3> Position { get; set; }
+        public List<Vector2> Position { get; set; }
 
         public void Invoke(Vector3 position)
         {

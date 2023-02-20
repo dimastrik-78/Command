@@ -1,5 +1,4 @@
 using Command.Interface;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,12 +6,15 @@ namespace Command
 {
     public class CommandInvoker : MonoBehaviour
     {
+
         [SerializeField] private int amountStorage;
 
         private SpawnObject _spawnObject;
         private TeleportObject _teleportObject;
         private GameObject _object;
         private List<ICommand> _commands;
+        private Queue<ICommand> _queueCommands;
+        private Queue<Vector2> _queuePosition;
 
         void Update()
         {
@@ -23,17 +25,17 @@ namespace Command
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _commands.Add(_spawnObject);
-                _spawnObject.Invoke((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
-
-                CheckCommandList();
+                _queueCommands.Enqueue(_spawnObject);
+                _queuePosition.Enqueue(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                _commands.Add(_teleportObject);
-                _teleportObject.Invoke((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
-
-                CheckCommandList();
+                _queueCommands.Enqueue(_teleportObject);
+                _queuePosition.Enqueue(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            }
+            else if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Complete();
             }
             else if (Input.GetMouseButtonDown(2))
             {
@@ -41,6 +43,16 @@ namespace Command
             }
         }
 
+        private void Complete()
+        {
+            while (_queueCommands.Count > 0)
+            {
+                _commands.Add(_queueCommands.Peek());
+                _queueCommands.Dequeue().Invoke(_queuePosition.Dequeue());
+                
+                CheckCommandList();
+            }
+        }
         private void CheckCommandList()
         {
             if (_commands.Count > amountStorage)
@@ -58,6 +70,9 @@ namespace Command
         public void Get(GameObject mainObject)
         {
             _commands = new List<ICommand>();
+            _queueCommands = new Queue<ICommand>();
+            _queuePosition = new Queue<Vector2>();
+            
             _spawnObject = new SpawnObject(mainObject);
             _teleportObject = new TeleportObject(mainObject);
         }

@@ -10,12 +10,12 @@ namespace Command
 
         public TeleportObject(GameObject mainObject)
         {
-            Position = new List<Vector3>();
+            Position = new List<Vector2>();
             _object = mainObject;
             Position.Add(Vector3.zero);
         }
 
-        public List<Vector3> Position { get; set; }
+        public List<Vector2> Position { get; set; }
 
         public void Invoke(Vector3 position)
         {
