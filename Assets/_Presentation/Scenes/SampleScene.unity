@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 84418089}
   - component: {fileID: 84418088}
-  - component: {fileID: 84418090}
   m_Layer: 0
   m_Name: Bootstrapper
   m_TagString: Untagged
@@ -153,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febc59cc060d5c84bab4eca844f054cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandInvoker: {fileID: 84418090}
+  amountStorage: 5
   cube: {fileID: 6473867992985249485, guid: 0c34b56ec3ae0e14c9ca0fb9a122bcae, type: 3}
 --- !u!4 &84418089
 Transform:
@@ -170,19 +169,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &84418090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 84418087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 460cc3eea01291e41ad33ee26b9ada95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amountStorage: 5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
